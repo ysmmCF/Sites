@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DUDA BUQUÊS | Luxo em Flores</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f7f1ff;
+      --white: #ffffff;
+      --text: #24152e;
+      --muted: #6a5b76;
+
+      --purple: #7c3aed;
+      --purple2: #5b21b6;
+      --purpleSoft: rgba(124, 58, 237, 0.14);
+
+      --shadow: 0 20px 50px rgba(0,0,0,.08);
+      --shadow2: 0 12px 30px rgba(0,0,0,.10);
+
+      --radius: 26px;
+      --radius2: 18px;
+      --max: 1200px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #ffffff 0%, var(--bg) 55%, #ffffff 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a{text-decoration:none;color:inherit;}
+    button{font-family: inherit;}
+
+    .blob{
+      position: absolute;
+      filter: blur(80px);
+      opacity: .35;
+      z-index: -1;
+    }
+    .blob.one{
+      width: 420px;
+      height: 420px;
+      background: #c4b5fd;
+      top: -140px;
+      left: -120px;
+      border-radius: 50%;
+    }
+    .blob.two{
+      width: 520px;
+      height: 520px;
+      background: #a78bfa;
+      bottom: -240px;
+      right: -240px;
+      border-radius: 50%;
+    }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(18px);
+      background: rgba(247, 241, 255, 0.75);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+
+    .nav{
+      max-width: var(--max);
+      margin: auto;
+      padding: 16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 18px;
+    }
+
+    .logo{
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      letter-spacing: .5px;
+      font-weight: 700;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .logo span{
+      color: var(--purple2);
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap: 18px;
+    }
+
+    nav a{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      transition: .25s;
+      position: relative;
+    }
+
+    nav a:hover{
+      color: var(--text);
+    }
+
+    nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:0%;
+      height:2px;
+      background: linear-gradient(90deg, var(--purple), var(--purple2));
+      transition:.25s;
+      border-radius: 10px;
+    }
+
+    nav a:hover::after{
+      width:100%;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+    }
+
+    .btn{
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: .25s;
+      font-weight: 700;
+      font-size: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+    }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--purple), var(--purple2));
+      color: white;
+      box-shadow: 0 12px 25px rgba(124, 58, 237, .35);
+    }
+
+    .btn-primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 35px rgba(124, 58, 237, .45);
+    }
+
+    .btn-outline{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.08);
+      color: var(--text);
+    }
+
+    .btn-outline:hover{
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow2);
+    }
+
+    /* HERO */
+    .hero{
+      max-width: var(--max);
+      margin: auto;
+      padding: 70px 20px 40px;
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items:center;
+    }
+
+    .hero h1{
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      letter-spacing: -.5px;
+    }
+
+    .hero h1 span{
+      color: var(--purple2);
+    }
+
+    .hero p{
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 520px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-info{
+      display:flex;
+      gap: 18px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .mini-card{
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(0,0,0,.05);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+      display:flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 170px;
+    }
+
+    .mini-card strong{
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .mini-card span{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hero-image{
+      position: relative;
+      width: 100%;
+      height: 520px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.92)),
+        url("https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,.05);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{ transform: translateY(0px); }
+      50%{ transform: translateY(-10px); }
+    }
+
+    .hero-badge{
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+
+    .hero-price{
+      position:absolute;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 14px 18px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.07);
+      text-align: right;
+    }
+
+    .hero-price strong{
+      font-size: 16px;
+      display:block;
+      color: var(--text);
+    }
+
+    .hero-price span{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    section{
+      max-width: var(--max);
+      margin: auto;
+      padding: 70px 20px;
+    }
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap: 20px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2{
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      letter-spacing: -.3px;
+    }
+
+    .section-title p{
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ABOUT */
+    .about{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items:center;
+    }
+
+    .about-box{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-box h3{
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .about-box p{
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    .about-list{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-item{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--purple), var(--purple2));
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .about-item span{
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .about-image{
+      height: 460px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.95)),
+        url("https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-image::after{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(124, 58, 237, .22), transparent 55%);
+    }
+
+    /* TESTIMONIALS */
+    .testimonials{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .testimonial{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: .25s;
+    }
+
+    .testimonial:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 22px 55px rgba(0,0,0,.09);
+    }
+
+    .testimonial p{
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .testimonial strong{
+      font-size: 15px;
+      display:block;
+    }
+
+    .stars{
+      color: var(--purple2);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    footer{
+      background: rgba(255,255,255,.75);
+      border-top: 1px solid rgba(0,0,0,.06);
+      padding: 40px 20px;
+    }
+
+    .footer-inner{
+      max-width: var(--max);
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    footer h3{
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    footer p, footer a{
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links a:hover{
+      color: var(--purple2);
+    }
+
+    /* WhatsApp floating button */
+    .whatsapp{
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: linear-gradient(135deg, #7c3aed, #4c1d95);
+      color: white;
+      border-radius: 999px;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 900;
+      box-shadow: 0 18px 45px rgba(124, 58, 237, .35);
+      z-index: 999;
+      transition: .25s;
+    }
+
+    .whatsapp:hover{
+      transform: translateY(-4px);
+    }
+
+    /* LOADING */
+    .loading{
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+      display:inline-flex;
+      gap: 10px;
+      align-items:center;
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      margin-top: 10px;
+      color: var(--muted);
+    }
+
+    @media(max-width: 980px){
+      .hero{
+        grid-template-columns: 1fr;
+      }
+      .hero-image{
+        height: 430px;
+      }
+      .about{
+        grid-template-columns: 1fr;
+      }
+      .testimonials{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 580px){
+      .hero h1{
+        font-size: 42px;
+      }
+      nav{
+        display:none;
+      }
+      .btn{
+        width: 100%;
+      }
+      .nav-actions{
+        width: 100%;
+        justify-content:flex-end;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
+  <header>
+    <div class="nav">
+      <div class="logo">DUDA <span>BUQUÊS</span> 💜</div>
+
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="catalogoduda.html">Catálogo</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#comentarios">Comentários</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="catalogoduda.html">💐 Ver Catálogo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <h1 id="heroTitle">Flores que viram <span>memória</span>.</h1>
+        <p id="heroSubtitle">
+          A DUDA BUQUÊS cria buquês elegantes e personalizados com acabamento premium.
+          Um presente perfeito para encantar, emocionar e marcar momentos especiais.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="catalogoduda.html" class="btn btn-primary">💜 Acessar Catálogo</a>
+          <button class="btn btn-outline" onclick="scrollToSection('sobre')">✨ Conhecer a loja</button>
+        </div>
+
+        <div class="hero-info">
+          <div class="mini-card">
+            <strong>Entrega rápida</strong>
+            <span>mesmo dia (consultar)</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>Acabamento premium</strong>
+            <span>fita + embalagem luxo</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>Cartão incluso</strong>
+            <span>mensagem personalizada</span>
+          </div>
+        </div>
+
+        <div class="loading" id="loadingHome" style="display:none;">💜 Carregando informações...</div>
+      </div>
+
+      <div class="hero-image" id="heroImage">
+        <div class="hero-badge" id="heroBadge">💐 Coleção Roxa Premium</div>
+        <div class="hero-price" id="heroPrice">
+          <strong>Buquês a partir de R$ 89,90</strong>
+          <span>personalizados do seu jeito</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="sobre">
+      <div class="section-title">
+        <div>
+          <h2>Sobre a DUDA BUQUÊS</h2>
+          <p>Flores não são só flores. São sentimentos embalados em luxo.</p>
+        </div>
+      </div>
+
+      <div class="about">
+        <div class="about-box">
+          <h3>Delicadeza, perfume e elegância.</h3>
+          <p id="aboutText">
+            Aqui cada detalhe é pensado: da escolha das flores ao acabamento final.
+            Nós montamos buquês com estilo e personalidade para surpreender de verdade.
+          </p>
+
+          <div class="about-list">
+            <div class="about-item">
+              <div class="dot"></div>
+              <span>Flores frescas selecionadas diariamente.</span>
+            </div>
+
+            <div class="about-item">
+              <div class="dot"></div>
+              <span>Buquês personalizados por tamanho e cor.</span>
+            </div>
+
+            <div class="about-item">
+              <div class="dot"></div>
+              <span>Embalagem premium estilo boutique.</span>
+            </div>
+
+            <div class="about-item">
+              <div class="dot"></div>
+              <span>Entrega rápida com cuidado total.</span>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <a class="btn btn-primary" href="catalogoduda.html">💐 Escolher meu buquê</a>
+          </div>
+        </div>
+
+        <div class="about-image" id="aboutImage"></div>
+      </div>
+    </section>
+
+    <section id="comentarios">
+      <div class="section-title">
+        <div>
+          <h2>Comentários</h2>
+          <p>O povo compra e vira fã. Simplesmente.</p>
+        </div>
+      </div>
+
+      <div class="testimonials" id="commentsGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3>DUDA BUQUÊS 💜</h3>
+        <p id="footerText">Buquês premium, elegantes e feitos com carinho.<br>Entregas rápidas e atendimento especial.</p>
+      </div>
+
+      <div class="footer-links">
+        <strong style="margin-bottom:6px;">Menu</strong>
+        <a href="index.html">Início</a>
+        <a href="catalogoduda.html">Catálogo</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#comentarios">Comentários</a>
+      </div>
+
+      <div class="footer-links">
+        <strong style="margin-bottom:6px;">Contato</strong>
+        <a href="#" onclick="openWhatsApp()">WhatsApp</a>
+        <a href="#" id="instagramLink" target="_blank">Instagram</a>
+        <a href="#" id="emailLink">E-mail</a>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:28px;color:var(--muted);font-size:13px;">
+      © 2026 DUDA BUQUÊS. Todos os direitos reservados.
+    </p>
+  </footer>
+
+  <a class="whatsapp" href="#" onclick="openWhatsApp()" id="whatsappButton">
+    💜 WhatsApp
+  </a>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJok3QZOeXUz_ZWHqQEuahM2DvO9xdJ-WAWnkVCm3Xg6Y7_q8w_JM0VsWBsm9xbvvL/exec";
+
+    let WHATSAPP_NUMBER = "5521966178536";
+    let WHATSAPP_TEXT = "Olá! Quero encomendar um buquê na DUDA BUQUÊS 💜💐";
+
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:"smooth"});
+    }
+
+    function openWhatsApp(){
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_TEXT)}`, "_blank");
+    }
+
+    function starsHTML(qtd){
+      let s = "";
+      for(let i=0;i<qtd;i++) s += "★";
+      return s;
+    }
+
+    async function loadHomeData(){
+      const loading = document.getElementById("loadingHome");
+      loading.style.display = "inline-flex";
+
+      try{
+        const res = await fetch(SCRIPT_URL + "?type=home");
+        const data = await res.json();
+
+        // HERO
+        if(data.hero_title){
+          document.getElementById("heroTitle").innerHTML = data.hero_title;
+        }
+
+        if(data.hero_subtitle){
+          document.getElementById("heroSubtitle").innerText = data.hero_subtitle;
+        }
+
+        if(data.hero_img){
+          document.getElementById("heroImage").style.background =
+            `linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.92)), url('${data.hero_img}')`;
+          document.getElementById("heroImage").style.backgroundSize = "cover";
+          document.getElementById("heroImage").style.backgroundPosition = "center";
+        }
+
+        // SOBRE
+        if(data.about_text){
+          document.getElementById("aboutText").innerText = data.about_text;
+        }
+
+        if(data.about_img){
+          document.getElementById("aboutImage").style.background =
+            `linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.95)), url('${data.about_img}')`;
+          document.getElementById("aboutImage").style.backgroundSize = "cover";
+          document.getElementById("aboutImage").style.backgroundPosition = "center";
+        }
+
+        // WHATSAPP
+        if(data.whatsapp_text){
+          WHATSAPP_TEXT = data.whatsapp_text;
+        }
+
+        if(data.whatsapp_number){
+          WHATSAPP_NUMBER = data.whatsapp_number;
+        }
+
+        if(data.whatsapp_button){
+          document.getElementById("whatsappButton").innerHTML = "💜 " + data.whatsapp_button;
+        }
+
+        // FOOTER (opcional)
+        if(data.footer_text){
+          document.getElementById("footerText").innerHTML = data.footer_text;
+        }
+
+        // Instagram / Email (opcional)
+        if(data.instagram_link){
+          document.getElementById("instagramLink").href = data.instagram_link;
+        } else {
+          document.getElementById("instagramLink").style.display = "none";
+        }
+
+        if(data.email){
+          document.getElementById("emailLink").href = "mailto:" + data.email;
+          document.getElementById("emailLink").innerText = data.email;
+        } else {
+          document.getElementById("emailLink").style.display = "none";
+        }
+
+      } catch(err){
+        console.log("Erro ao carregar home:", err);
+      }
+
+      loading.style.display = "none";
+    }
+
+    async function loadComments(){
+      const grid = document.getElementById("commentsGrid");
+      grid.innerHTML = "";
+
+      try{
+        const res = await fetch(SCRIPT_URL + "?type=comments");
+        const data = await res.json();
+
+        if(!data || data.length === 0){
+          grid.innerHTML = `
+            <div class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“Ainda não temos comentários cadastrados. Seja o primeiro a comprar e avaliar 💜”</p>
+              <strong>— DUDA BUQUÊS</strong>
+            </div>
+          `;
+          return;
+        }
+
+        data.forEach(c => {
+          const card = document.createElement("div");
+          card.className = "testimonial";
+
+          const stars = Number(c.stars) || 5;
+
+          card.innerHTML = `
+            <div class="stars">${starsHTML(stars)}</div>
+            <p>“${c.comment}”</p>
+            <strong>— ${c.name}</strong>
+          `;
+
+          grid.appendChild(card);
+        });
+
+      } catch(err){
+        console.log("Erro ao carregar comentários:", err);
+        grid.innerHTML = `
+          <div class="testimonial">
+            <div class="stars">★★★★★</div>
+            <p>“Erro ao carregar comentários. Tente novamente mais tarde.”</p>
+            <strong>— Sistema</strong>
+          </div>
+        `;
+      }
+    }
+
+    loadHomeData();
+    loadComments();
+  </script>
+
+</body>
+</html>
