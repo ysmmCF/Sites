@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administrador | DUDA BUQUÊS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f7f1ff;
+      --white: #ffffff;
+      --text: #24152e;
+      --muted: #6a5b76;
+
+      --purple: #7c3aed;
+      --purple2: #5b21b6;
+      --purple3: #4c1d95;
+
+      --shadow: 0 20px 50px rgba(0,0,0,.08);
+      --shadow2: 0 12px 30px rgba(0,0,0,.10);
+
+      --radius: 26px;
+      --max: 1200px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #ffffff 0%, var(--bg) 55%, #ffffff 100%);
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index:999;
+      backdrop-filter: blur(18px);
+      background: rgba(247, 241, 255, 0.80);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+
+    .nav{
+      max-width: var(--max);
+      margin:auto;
+      padding: 18px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .logo{
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 800;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .logo span{
+      color: var(--purple2);
+    }
+
+    .tabs{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab{
+      border:none;
+      cursor:pointer;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.06);
+      transition:.25s;
+      font-size: 14px;
+    }
+
+    .tab:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow2);
+    }
+
+    .tab.active{
+      background: linear-gradient(135deg, var(--purple), var(--purple2));
+      color:white;
+      box-shadow: 0 14px 30px rgba(124, 58, 237, .30);
+      border: none;
+    }
+
+    main{
+      max-width: var(--max);
+      margin:auto;
+      padding: 45px 20px;
+    }
+
+    .panel{
+      display:none;
+      animation: fade .25s ease;
+    }
+
+    .panel.active{
+      display:block;
+    }
+
+    @keyframes fade{
+      from{opacity:0; transform: translateY(10px);}
+      to{opacity:1; transform: translateY(0);}
+    }
+
+    .title{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .title h1{
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+    }
+
+    .title p{
+      max-width: 650px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .card{
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label{
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--muted);
+      display:block;
+      margin-bottom: 6px;
+    }
+
+    input, textarea{
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.95);
+      font-size: 14px;
+      outline:none;
+      transition: .2s;
+    }
+
+    input:focus, textarea:focus{
+      border-color: rgba(124, 58, 237, .45);
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, .12);
+    }
+
+    textarea{
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .btn{
+      padding: 12px 18px;
+      border-radius: 999px;
+      border:none;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 14px;
+      transition:.25s;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--purple), var(--purple2));
+      color:white;
+      box-shadow: 0 14px 30px rgba(124, 58, 237, .35);
+    }
+
+    .btn-primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(124, 58, 237, .45);
+    }
+
+    .btn-danger{
+      background: rgba(255,0,0,.12);
+      color:#b00020;
+    }
+
+    .btn-danger:hover{
+      background: rgba(255,0,0,.18);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(0,0,0,.08);
+      color: var(--text);
+    }
+
+    .btn-outline:hover{
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow2);
+    }
+
+    .actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .status{
+      margin-top: 14px;
+      font-weight: 900;
+      color: var(--purple2);
+      font-size: 14px;
+    }
+
+    .mini{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .list{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.75);
+      flex-wrap: wrap;
+    }
+
+    .item strong{
+      font-size: 14px;
+    }
+
+    .item span{
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 800px;
+      word-break: break-word;
+    }
+
+    .preview-box{
+      margin-top: 12px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,.06);
+      background: rgba(255,255,255,.75);
+    }
+
+    .preview-box img{
+      width: 100%;
+      max-width: 320px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 18px 40px rgba(0,0,0,.08);
+    }
+
+    .item-img{
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .btn-group{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media(max-width: 750px){
+      .grid{
+        grid-template-columns: 1fr;
+      }
+      .title h1{
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">DUDA <span>BUQUÊS</span> 💜 ADMIN</div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showPanel('products')">🌸 Produtos</button>
+      <button class="tab" onclick="showPanel('home')">🏠 Página Inicial</button>
+      <button class="tab" onclick="showPanel('comments')">💬 Comentários</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- PRODUTOS -->
+  <section class="panel active" id="panel-products">
+    <div class="title">
+      <div>
+        <h1>Produtos</h1>
+        <p>Cadastre, edite e apague buquês do catálogo (aba Página1 da planilha).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>ID do produto</label>
+          <input id="p_id" placeholder="Ex: 7">
+        </div>
+
+        <div>
+          <label>Preço do produto</label>
+          <input id="p_price" placeholder="Ex: 149.90">
+          <div class="mini">Use ponto, não vírgula. Ex: 149.90</div>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Nome do buquê</label>
+          <input id="p_name" placeholder="Ex: Buquê Luxo Roxo">
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Link da imagem do buquê</label>
+          <input id="p_img" placeholder="Cole aqui o link da imagem" oninput="previewImage('p_img','previewProductImg')">
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <img id="previewProductImg" src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=1200&q=80" alt="Preview">
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveProduct()">💾 Salvar produto</button>
+        <button class="btn btn-outline" onclick="clearProductForm()">🧹 Limpar</button>
+        <button class="btn btn-outline" onclick="loadProducts()">🔄 Atualizar lista</button>
+      </div>
+
+      <div class="status" id="productsStatus"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:12px;">Produtos cadastrados</h3>
+      <div class="list" id="productsList"></div>
+    </div>
+  </section>
+
+  <!-- HOME -->
+  <section class="panel" id="panel-home">
+    <div class="title">
+      <div>
+        <h1>Página Inicial</h1>
+        <p>Aqui você muda textos e imagens da página principal do site.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>Título principal do site</label>
+          <input id="home_title" placeholder="Ex: DUDA BUQUÊS 💜">
+        </div>
+
+        <div>
+          <label>Texto menor abaixo do título</label>
+          <input id="home_subtitle" placeholder="Ex: Buquês premium para momentos especiais.">
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Imagem principal do topo do site</label>
+          <input id="home_hero_img" placeholder="Cole aqui o link da imagem principal"
+            oninput="previewImage('home_hero_img','previewHeroImg')">
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <img id="previewHeroImg" src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=1200&q=80" alt="Preview">
+      </div>
+
+      <hr style="margin:18px 0;border:none;border-top:1px solid rgba(0,0,0,.06);">
+
+      <div class="grid">
+        <div style="grid-column: span 2;">
+          <label>Texto da parte "Sobre a loja"</label>
+          <textarea id="home_about_text" placeholder="Ex: Aqui na Duda Buquês cada buquê é montado com carinho..."></textarea>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Imagem da parte "Sobre a loja"</label>
+          <input id="home_about_img" placeholder="Cole aqui o link da imagem do Sobre"
+            oninput="previewImage('home_about_img','previewAboutImg')">
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <img id="previewAboutImg" src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?auto=format&fit=crop&w=1200&q=80" alt="Preview">
+      </div>
+
+      <hr style="margin:18px 0;border:none;border-top:1px solid rgba(0,0,0,.06);">
+
+      <div class="grid">
+        <div style="grid-column: span 2;">
+          <label>Texto da parte do WhatsApp</label>
+          <textarea id="home_whatsapp_text" placeholder="Ex: Quer encomendar agora? Fale com a gente no WhatsApp 💜"></textarea>
+        </div>
+
+        <div>
+          <label>Número do WhatsApp (somente números)</label>
+          <input id="home_whatsapp_number" placeholder="Ex: 5521966178536">
+        </div>
+
+        <div>
+          <label>Texto do botão do WhatsApp</label>
+          <input id="home_whatsapp_button" placeholder="Ex: Fazer pedido agora">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="saveHomeAll()">💾 Salvar tudo</button>
+        <button class="btn btn-outline" onclick="loadHome()">🔄 Atualizar dados</button>
+      </div>
+
+      <div class="status" id="homeStatus"></div>
+    </div>
+  </section>
+
+  <!-- COMMENTS -->
+  <section class="panel" id="panel-comments">
+    <div class="title">
+      <div>
+        <h1>Comentários</h1>
+        <p>Adicione e apague comentários que aparecem na página principal.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grid">
+        <div>
+          <label>ID do comentário</label>
+          <input id="c_id" placeholder="Ex: 1">
+        </div>
+
+        <div>
+          <label>Quantidade de estrelas (1 a 5)</label>
+          <input id="c_stars" placeholder="Ex: 5">
+          <div class="mini">Você coloca só o número. O site cria as estrelas ⭐ automaticamente.</div>
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Nome da pessoa</label>
+          <input id="c_name" placeholder="Ex: Maria">
+        </div>
+
+        <div style="grid-column: span 2;">
+          <label>Comentário da pessoa</label>
+          <textarea id="c_comment" placeholder="Ex: Chegou perfeito, lindo e cheiroso! 💜"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="addComment()">💬 Adicionar comentário</button>
+        <button class="btn btn-outline" onclick="loadComments()">🔄 Atualizar lista</button>
+      </div>
+
+      <div class="status" id="commentsStatus"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:12px;">Comentários cadastrados</h3>
+      <div class="list" id="commentsList"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJok3QZOeXUz_ZWHqQEuahM2DvO9xdJ-WAWnkVCm3Xg6Y7_q8w_JM0VsWBsm9xbvvL/exec";
+
+  function showPanel(panel){
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+
+    document.getElementById("panel-" + panel).classList.add("active");
+
+    const btns = document.querySelectorAll(".tab");
+    if(panel === "products") btns[0].classList.add("active");
+    if(panel === "home") btns[1].classList.add("active");
+    if(panel === "comments") btns[2].classList.add("active");
+  }
+
+  function previewImage(inputId, imgId){
+    const url = document.getElementById(inputId).value.trim();
+    if(url.startsWith("http")){
+      document.getElementById(imgId).src = url;
+    }
+  }
+
+  async function postData(payload){
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+    return await res.json();
+  }
+
+  /* ======================
+      PRODUTOS
+  ====================== */
+  async function loadProducts(){
+    const list = document.getElementById("productsList");
+    list.innerHTML = "<div class='item'><span>Carregando...</span></div>";
+
+    try{
+      const res = await fetch(SCRIPT_URL + "?type=products");
+      const data = await res.json();
+
+      list.innerHTML = "";
+
+      if(data.length === 0){
+        list.innerHTML = "<div class='item'><span>Nenhum produto cadastrado.</span></div>";
+        return;
+      }
+
+      data.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        div.innerHTML = `
+          <img class="item-img" src="${p.img}" alt="${p.name}">
+          <div style="flex:1;">
+            <strong>#${p.id} - ${p.name}</strong><br>
+            <span>Preço: R$ ${p.price}</span>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="editProduct('${p.id}','${escapeQuotes(p.name)}','${p.price}','${escapeQuotes(p.img)}')">✏️ Editar</button>
+            <button class="btn btn-danger" onclick="deleteProduct('${p.id}')">🗑 Apagar</button>
+          </div>
+        `;
+
+        list.appendChild(div);
+      });
+
+    } catch(e){
+      list.innerHTML = "<div class='item'><span>Erro ao carregar produtos.</span></div>";
+    }
+  }
+
+  function escapeQuotes(text){
+    return String(text).replace(/'/g, "\\'");
+  }
+
+  function editProduct(id, name, price, img){
+    document.getElementById("p_id").value = id;
+    document.getElementById("p_name").value = name;
+    document.getElementById("p_price").value = price;
+    document.getElementById("p_img").value = img;
+
+    previewImage("p_img","previewProductImg");
+
+    document.getElementById("productsStatus").innerText = "Editando produto ID " + id + " ✏️";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function clearProductForm(){
+    document.getElementById("p_id").value = "";
+    document.getElementById("p_name").value = "";
+    document.getElementById("p_price").value = "";
+    document.getElementById("p_img").value = "";
+    document.getElementById("productsStatus").innerText = "";
+  }
+
+  async function saveProduct(){
+    const status = document.getElementById("productsStatus");
+    status.innerText = "Salvando produto...";
+
+    try{
+      const data = await postData({
+        type: "products",
+        action: "add",
+        id: document.getElementById("p_id").value,
+        name: document.getElementById("p_name").value,
+        price: document.getElementById("p_price").value,
+        img: document.getElementById("p_img").value
+      });
+
+      status.innerText = data.message;
+      loadProducts();
+
+    } catch(e){
+      status.innerText = "Erro ao salvar produto.";
+    }
+  }
+
+  async function deleteProduct(id){
+    if(!confirm("Tem certeza que deseja apagar o produto " + id + "?")) return;
+
+    const status = document.getElementById("productsStatus");
+    status.innerText = "Apagando produto...";
+
+    try{
+      const data = await postData({
+        type: "products",
+        action: "delete",
+        id: id
+      });
+
+      status.innerText = data.message;
+      loadProducts();
+
+    } catch(e){
+      status.innerText = "Erro ao apagar produto.";
+    }
+  }
+
+  /* ======================
+      HOME
+  ====================== */
+  async function loadHome(){
+    try{
+      const res = await fetch(SCRIPT_URL + "?type=home");
+      const data = await res.json();
+
+      document.getElementById("home_title").value = data.hero_title || "";
+      document.getElementById("home_subtitle").value = data.hero_subtitle || "";
+      document.getElementById("home_hero_img").value = data.hero_img || "";
+      document.getElementById("home_about_text").value = data.about_text || "";
+      document.getElementById("home_about_img").value = data.about_img || "";
+      document.getElementById("home_whatsapp_text").value = data.whatsapp_text || "";
+      document.getElementById("home_whatsapp_number").value = data.whatsapp_number || "";
+      document.getElementById("home_whatsapp_button").value = data.whatsapp_button || "";
+
+      previewImage("home_hero_img", "previewHeroImg");
+      previewImage("home_about_img", "previewAboutImg");
+
+      document.getElementById("homeStatus").innerText = "Dados carregados 💜";
+
+    } catch(e){
+      document.getElementById("homeStatus").innerText = "Erro ao carregar dados da home.";
+    }
+  }
+
+  async function saveKeyValue(key, value){
+    return await postData({
+      type: "home",
+      action: "set",
+      key: key,
+      value: value
+    });
+  }
+
+  async function saveHomeAll(){
+    const status = document.getElementById("homeStatus");
+    status.innerText = "Salvando tudo...";
+
+    try{
+      await saveKeyValue("hero_title", document.getElementById("home_title").value);
+      await saveKeyValue("hero_subtitle", document.getElementById("home_subtitle").value);
+      await saveKeyValue("hero_img", document.getElementById("home_hero_img").value);
+
+      await saveKeyValue("about_text", document.getElementById("home_about_text").value);
+      await saveKeyValue("about_img", document.getElementById("home_about_img").value);
+
+      await saveKeyValue("whatsapp_text", document.getElementById("home_whatsapp_text").value);
+      await saveKeyValue("whatsapp_number", document.getElementById("home_whatsapp_number").value);
+      await saveKeyValue("whatsapp_button", document.getElementById("home_whatsapp_button").value);
+
+      status.innerText = "Página inicial atualizada com sucesso 💜";
+
+    } catch(e){
+      status.innerText = "Erro ao salvar a página inicial.";
+    }
+  }
+
+  /* ======================
+      COMMENTS
+  ====================== */
+  async function loadComments(){
+    const list = document.getElementById("commentsList");
+    list.innerHTML = "<div class='item'><span>Carregando...</span></div>";
+
+    try{
+      const res = await fetch(SCRIPT_URL + "?type=comments");
+      const data = await res.json();
+
+      list.innerHTML = "";
+
+      if(data.length === 0){
+        list.innerHTML = "<div class='item'><span>Nenhum comentário cadastrado.</span></div>";
+        return;
+      }
+
+      data.forEach(c => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        div.innerHTML = `
+          <div style="flex:1;">
+            <strong>#${c.id} - ${c.name} (${c.stars}⭐)</strong><br>
+            <span>${c.comment}</span>
+          </div>
+          <button class="btn btn-danger" onclick="deleteComment('${c.id}')">🗑 Apagar</button>
+        `;
+
+        list.appendChild(div);
+      });
+
+    } catch(e){
+      list.innerHTML = "<div class='item'><span>Erro ao carregar comentários.</span></div>";
+    }
+  }
+
+  async function addComment(){
+    const status = document.getElementById("commentsStatus");
+    status.innerText = "Salvando comentário...";
+
+    try{
+      const data = await postData({
+        type: "comments",
+        action: "add",
+        id: document.getElementById("c_id").value,
+        name: document.getElementById("c_name").value,
+        comment: document.getElementById("c_comment").value,
+        stars: document.getElementById("c_stars").value
+      });
+
+      status.innerText = data.message;
+      loadComments();
+
+    } catch(e){
+      status.innerText = "Erro ao salvar comentário.";
+    }
+  }
+
+  async function deleteComment(id){
+    if(!confirm("Apagar comentário ID " + id + "?")) return;
+
+    const status = document.getElementById("commentsStatus");
+    status.innerText = "Apagando comentário...";
+
+    try{
+      const data = await postData({
+        type: "comments",
+        action: "delete",
+        id: id
+      });
+
+      status.innerText = data.message;
+      loadComments();
+
+    } catch(e){
+      status.innerText = "Erro ao apagar comentário.";
+    }
+  }
+
+  loadProducts();
+  loadHome();
+  loadComments();
+</script>
+
+</body>
+</html>
